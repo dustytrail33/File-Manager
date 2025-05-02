@@ -1,36 +1,30 @@
-// import { handleInit } from "./commands/init.js";
-
 import { exit } from "./commands/exit.js";
+import { handleCommand } from "./commands/index.js";
 import { parseArgs } from "./utils/parseArgs.js";
 import readline from "readline";
+import { writeMessage } from "./utils/writeMessage.js";
 
 const rootDir = import.meta.dirname;
-const { stdin, stdout, argv } = process;
+const { stdout, argv } = process;
 
 const flags = parseArgs(argv);
-const userName = flags.username;
+const username = flags.username;
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
-  prompt: "enter the command -->",
+  prompt: "enter your command -->",
 });
 
-console.log(`Welcome to the File Manager, ${userName}!`);
+writeMessage(`Welcome to the File Manager, ${username}!\n`, "green");
 rl.prompt();
 
 rl.on("line", (line) => {
   const input = line.trim();
-
-  if (input === ".exit") {
-    exit(userName);
-  } else {
-    console.log(`Вы ввели: ${input}`);
-    rl.prompt();
-  }
+  handleCommand(input, username, rl);
 });
 
 rl.on("SIGINT", () => {
-  console.log("\n");
-  exit(userName);
+  stdout.write("\n");
+  exit(username);
 });
