@@ -25,14 +25,12 @@ const writeMessageWithDashes = (text) => {
 };
 
 /**
- *
  * @param {Object} params
  * @param {string} params.message
  * @param {string} [params.color]
  * @param {boolean} [params.withDashes=false]
  */
 export const writeMessage = ({ message, color, withDashes }) => {
-  // console.log('333', message, color, withDashes )
   const text = getColorText(message, color);
   if (withDashes) {
     writeMessageWithDashes(text);
