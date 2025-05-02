@@ -3,16 +3,20 @@ import { writeMessage } from "../utils/writeMessage.js";
 import { exit } from "./exit.js";
 import { up } from "./up.js";
 import { ls } from "./ls.js";
+import { cd } from "./cd.js";
 
 export const handleCommand = async (input, rl) => {
   const [cmd, ...args] = input.split(" ");
 
   switch (cmd) {
     case "up":
-      up(args);
+      up();
       break;
     case "ls":
       await ls();
+      break;
+    case "cd":
+      await cd(args);
       break;
     case ".exit":
       exit();
