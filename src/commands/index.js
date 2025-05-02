@@ -2,13 +2,17 @@ import { getState } from "../state/state.js";
 import { writeMessage } from "../utils/writeMessage.js";
 import { exit } from "./exit.js";
 import { up } from "./up.js";
+import { ls } from "./ls.js";
 
-export function handleCommand(input, rl) {
+export const handleCommand = async (input, rl) => {
   const [cmd, ...args] = input.split(" ");
 
   switch (cmd) {
     case "up":
       up(args);
+      break;
+    case "ls":
+      await ls();
       break;
     case ".exit":
       exit();
@@ -21,11 +25,11 @@ export function handleCommand(input, rl) {
   }
 
   const { currentDir } = getState();
-  
+
   writeMessage({
     message: `You are currently in ${currentDir}`,
     color: "green",
     withDashes: true,
   });
   rl.prompt();
-}
+};

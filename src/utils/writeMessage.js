@@ -14,12 +14,12 @@ const getColorText = (message, initColor) => {
 
 const writeMessageWithDashes = (text) => {
   writeMessage({
-    message: "\n------------------------------",
+    message: "\n" + "-".repeat(30),
     color: "yellow",
   });
   stdout.write(text + "\n");
   writeMessage({
-    message: "------------------------------\n",
+    message: "-".repeat(30) + "\n",
     color: "yellow",
   });
 };
