@@ -1,13 +1,12 @@
+import readline from "readline";
+import os from "os";
 import { exit } from "./commands/exit.js";
 import { handleCommand } from "./commands/index.js";
 import { parseArgs } from "./utils/parseArgs.js";
-import readline from "readline";
 import { writeMessage } from "./utils/writeMessage.js";
 
-const rootDir = import.meta.dirname;
-const { stdout, argv } = process;
-
-const flags = parseArgs(argv);
+const homeDir = os.homedir();
+const flags = parseArgs(process.argv);
 const username = flags.username;
 
 const rl = readline.createInterface({
@@ -16,7 +15,12 @@ const rl = readline.createInterface({
   prompt: "enter your command -->",
 });
 
-writeMessage(`Welcome to the File Manager, ${username}!\n`, "green");
+writeMessage({
+  message: `Welcome to the File Manager, ${username}!\nYou are currently in ${homeDir}`,
+  color: "green",
+  withDashes: true,
+});
+
 rl.prompt();
 
 rl.on("line", (line) => {
@@ -25,6 +29,5 @@ rl.on("line", (line) => {
 });
 
 rl.on("SIGINT", () => {
-  stdout.write("\n");
   exit(username);
 });

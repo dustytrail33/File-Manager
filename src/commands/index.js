@@ -9,8 +9,13 @@ export function handleCommand(input, username, rl) {
       rl.close();
       break;
     default:
-      stdout.write(`Вы ввели: ${input}\n`);
+      writeMessage({ message: "Invalid command.", color: "red" });
       rl.prompt();
+      return
   }
-  writeMessage(`\nYou are currently in ${cwd()}\n`, "red");
+  writeMessage({
+    message: `You are currently in ${cwd()}`,
+    color: "green",
+    withDashes: true,
+  });
 }

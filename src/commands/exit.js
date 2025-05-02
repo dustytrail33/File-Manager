@@ -1,9 +1,10 @@
 import { writeMessage } from "../utils/writeMessage.js";
 
 export const exit = (username) => {
-  writeMessage(
-    `Thank you for using File Manager, ${username}, goodbye!`,
-    "green"
-  );
+  writeMessage({
+    message: `Thank you for using File Manager, ${username}, goodbye!`,
+    color: "green",
+    withDashes: true,
+  });
   process.exit(0);
 };
