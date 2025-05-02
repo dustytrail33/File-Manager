@@ -10,7 +10,7 @@ export const parseArgs = (args) => {
   const argsList = newArgs.reduce((list, arg) => {
     if (arg.startsWith("--")) {
       const [key, value] = arg.split("=");
-      list[key] = value !== undefined ? value : true;
+      list[key.slice(2)] = value !== undefined ? value : true;
     }
     return list;
   }, {});
