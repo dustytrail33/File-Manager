@@ -1,0 +1,17 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-dusty:dustytrail33/File-Manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
