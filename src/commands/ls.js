@@ -3,7 +3,7 @@ import { getState } from "../state/state.js";
 import { writeMessage } from "../utils/writeMessage.js";
 
 export const ls = async () => {
-  const { currentDir } = getState();
+  const {currentDir} = getState()
 
   try {
     await promises.access(currentDir);
@@ -25,8 +25,8 @@ export const ls = async () => {
     files.sort((a, b) => a.Name.localeCompare(b.Name));
 
     const list = [...folders, ...files];
-
-    console.log("\n");
+    
+    console.log('\n')
     console.table(list);
   } catch (error) {
     writeMessage({ message: "\nFailed to list directory", color: "red" });

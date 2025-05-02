@@ -1,6 +1,18 @@
-import { setCurrentDir } from "../state/state.js"
+import path from "path";
+import { getState, setCurrentDir } from "../state/state.js";
+import { writeMessage } from "../utils/writeMessage.js";
 
-export const up = (args) => {
-    setCurrentDir('123131')
-    console.log( args )
-}
+export const up = () => {
+  const { currentDir } = getState();
+  const parentDir = path.dirname(currentDir);
+
+  if (parentDir === currentDir) {
+    writeMessage({
+      message: "You are already at the root directory",
+      color: "red",
+    });
+    return;
+  }
+
+  setCurrentDir(parentDir);
+};
