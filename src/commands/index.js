@@ -5,6 +5,8 @@ import { up } from "./up.js";
 import { ls } from "./ls.js";
 import { cd } from "./cd.js";
 import { cat } from "./cat.js";
+import { add } from "./add.js";
+import { mkdir } from "./mkdir.js";
 
 export const handleCommand = async (input, rl) => {
   const [cmd, ...args] = input.split(" ");
@@ -21,6 +23,12 @@ export const handleCommand = async (input, rl) => {
       break;
     case "cat":
       await cat(args);
+      break;
+    case "add":
+      await add(args);
+      break;
+    case "mkdir":
+      await mkdir(args);
       break;
     case ".exit":
       exit();

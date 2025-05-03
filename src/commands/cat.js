@@ -27,7 +27,9 @@ export const cat = async (args) => {
     const readStream = createReadStream(filePath, { encoding: "utf-8" });
 
     const asyncPipeline = promisify(pipeline);
+
     writeMessage({ message: "-".repeat(30), color: "yellow" });
+    
     const readCallback = async (data) => {
       for await (const chunk of data) {
         stdout.write(chunk);

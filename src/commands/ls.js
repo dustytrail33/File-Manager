@@ -1,9 +1,10 @@
 import { promises } from "fs";
 import { getState } from "../state/state.js";
 import { writeMessage } from "../utils/writeMessage.js";
+import { truncateString } from "../utils/truncateString.js";
 
 export const ls = async () => {
-  const {currentDir} = getState()
+  const { currentDir } = getState();
 
   try {
     await promises.access(currentDir);
@@ -15,9 +16,12 @@ export const ls = async () => {
 
     entries.forEach((entry) => {
       if (entry.isDirectory()) {
-        folders.push({ Name: entry.name, Type: "directory" });
+        folders.push({
+          Name: truncateString(entry.name, 30),
+          Type: "directory",
+        });
       } else {
-        files.push({ Name: entry.name, Type: "file" });
+        files.push({ Name: truncateString(entry.name, 30), Type: "file" });
       }
     });
 
@@ -25,8 +29,8 @@ export const ls = async () => {
     files.sort((a, b) => a.Name.localeCompare(b.Name));
 
     const list = [...folders, ...files];
-    
-    console.log('\n')
+
+    console.log("\n");
     console.table(list);
   } catch (error) {
     writeMessage({ message: "\nFailed to list directory", color: "red" });
