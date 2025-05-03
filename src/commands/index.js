@@ -4,6 +4,7 @@ import { exit } from "./exit.js";
 import { up } from "./up.js";
 import { ls } from "./ls.js";
 import { cd } from "./cd.js";
+import { cat } from "./cat.js";
 
 export const handleCommand = async (input, rl) => {
   const [cmd, ...args] = input.split(" ");
@@ -17,6 +18,9 @@ export const handleCommand = async (input, rl) => {
       break;
     case "cd":
       await cd(args);
+      break;
+    case "cat":
+      await cat(args);
       break;
     case ".exit":
       exit();

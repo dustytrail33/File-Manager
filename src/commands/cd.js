@@ -1,7 +1,8 @@
 import path from "path";
-import {promises} from 'fs'
+import { promises } from "fs";
 import { getState, setCurrentDir } from "../state/state.js";
 import { writeMessage } from "../utils/writeMessage.js";
+import { checkArgsLength } from "../utils/checkArgsLength.js";
 
 /**
  *
@@ -12,14 +13,8 @@ const MIN_ARGS_LENGTH = 1;
 
 export const cd = async (args) => {
   const { currentDir } = getState();
+  if (!checkArgsLength({ args, length: MIN_ARGS_LENGTH })) return;
 
-  if (args.length > MIN_ARGS_LENGTH || args.length === 0) {
-    writeMessage({
-      message: "Invalid input: Please enter only one folder path",
-      color: "red",
-    });
-    return;
-  }
   const targetPath = args.join(" ").trim();
   let newPath;
 
