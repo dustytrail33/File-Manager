@@ -9,6 +9,9 @@ import { add } from "./add.js";
 import { mkdir } from "./mkdir.js";
 import { rn } from "./rn.js";
 import { cp } from "./cp.js";
+import { mv } from "./mv.js";
+import { rm } from "./rm.js";
+import { os } from "./os.js";
 
 export const handleCommand = async (input, rl) => {
   const [cmd, ...args] = input.split(" ");
@@ -37,6 +40,15 @@ export const handleCommand = async (input, rl) => {
       break;
     case "cp":
       await cp(args);
+      break;
+    case "mv":
+      await mv(args);
+      break;
+    case "rm":
+      await rm(args);
+      break;
+    case "os":
+      await os(args);
       break;
     case ".exit":
       exit();
