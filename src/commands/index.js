@@ -12,6 +12,7 @@ import { cp } from "./cp.js";
 import { mv } from "./mv.js";
 import { rm } from "./rm.js";
 import { os } from "./os.js";
+import { hash } from "./hash.js";
 
 export const handleCommand = async (input, rl) => {
   const [cmd, ...args] = input.split(" ");
@@ -53,6 +54,9 @@ export const handleCommand = async (input, rl) => {
     case ".exit":
       exit();
       rl.close();
+      break;
+    case "hash":
+      await hash(args);
       break;
     default:
       writeMessage({ message: "Invalid input", color: "red" });

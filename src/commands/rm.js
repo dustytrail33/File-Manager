@@ -29,7 +29,7 @@ export const rm = async (args) => {
         color: "red",
       });
     } else {
-      writeMessage({ message: `Error delete ${error.message}`, color: "red" });
+      writeMessage({ message: "Error delete", color: "red" });
     }
   }
 };
