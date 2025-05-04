@@ -13,6 +13,8 @@ import { mv } from "./mv.js";
 import { rm } from "./rm.js";
 import { os } from "./os.js";
 import { hash } from "./hash.js";
+import { compress } from "./compress.js";
+import { decompress } from "./decompress.js";
 
 export const handleCommand = async (input, rl) => {
   const [cmd, ...args] = input.split(" ");
@@ -51,12 +53,18 @@ export const handleCommand = async (input, rl) => {
     case "os":
       await os(args);
       break;
+    case "compress":
+      await compress(args);
+      break;
     case ".exit":
       exit();
       rl.close();
       break;
     case "hash":
       await hash(args);
+      break;
+    case "decompress":
+      await decompress(args);
       break;
     default:
       writeMessage({ message: "Invalid input", color: "red" });
