@@ -14,7 +14,7 @@ export const add = async (args) => {
   if (!checkArgsLength({ args, length: MIN_ARGS_LENGTH })) return;
 
   const fileName = args.join(" ").trim();
-  const filePath = getAbsolutePath(targetPath);
+  const filePath = getAbsolutePath(fileName);
 
   try {
     await promises.writeFile(filePath, "", { flag: "wx" });
