@@ -1,8 +1,7 @@
-import { getState } from "../state/state.js";
-import { resolve } from "path";
 import { writeMessage } from "../utils/writeMessage.js";
 import { promises } from "fs";
 import { checkArgsLength } from "../utils/checkArgsLength.js";
+import { getAbsolutePath } from "../utils/getAbsolutePath.js";
 
 /**
  *
@@ -14,9 +13,8 @@ const MIN_ARGS_LENGTH = 1;
 export const add = async (args) => {
   if (!checkArgsLength({ args, length: MIN_ARGS_LENGTH })) return;
 
-  const { currentDir } = getState();
   const fileName = args.join(" ").trim();
-  const filePath = resolve(currentDir, fileName);
+  const filePath = getAbsolutePath(targetPath);
 
   try {
     await promises.writeFile(filePath, "", { flag: "wx" });

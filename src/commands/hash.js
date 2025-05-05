@@ -1,11 +1,10 @@
-import { resolve } from "path";
 import { createHash } from "crypto";
 import { createReadStream } from "fs";
 import { pipeline } from "stream/promises";
 
-import { getState } from "../state/state.js";
 import { checkArgsLength } from "../utils/checkArgsLength.js";
 import { writeMessage } from "../utils/writeMessage.js";
+import { getAbsolutePath } from "../utils/getAbsolutePath.js";
 
 /**
  *
@@ -17,10 +16,9 @@ const MIN_ARGS_LENGTH = 1;
 export const hash = async (args) => {
   if (!checkArgsLength({ args, length: MIN_ARGS_LENGTH })) return;
 
-  const { currentDir } = getState();
   const targetName = args.join(" ").trim();
 
-  const targetPath = resolve(currentDir, targetName);
+  const targetPath = getAbsolutePath(targetName);
 
   const hash = createHash("sha256");
 

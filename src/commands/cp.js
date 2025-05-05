@@ -1,10 +1,11 @@
 import { getState } from "../state/state.js";
-import { resolve, basename } from "path";
+import { resolve, isAbsolute, basename } from "path";
 import { writeMessage } from "../utils/writeMessage.js";
 import { promises, createReadStream, createWriteStream, constants } from "fs";
 import { checkArgsLength } from "../utils/checkArgsLength.js";
 import { promisify } from "util";
 import { pipeline } from "stream";
+import { getAbsolutePath } from "../utils/getAbsolutePath.js";
 
 /**
  *
@@ -19,8 +20,10 @@ export const cp = async (args) => {
   const { currentDir } = getState();
   const [fileName, targetDir] = args;
 
-  const filePath = resolve(currentDir, fileName);
-  const targetPath = resolve(currentDir, targetDir, basename(fileName));
+  const filePath = getAbsolutePath(fileName);
+  const targetPath = isAbsolute(targetDir)
+    ? resolve(targetDir, basename(fileName))
+    : resolve(currentDir, targetDir, basename(fileName));
 
   try {
     await promises.access(filePath, constants.F_OK);

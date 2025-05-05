@@ -1,8 +1,8 @@
-import { getState } from "../state/state.js";
-import { resolve } from "path";
+import { isAbsolute, dirname, resolve } from "path";
 import { writeMessage } from "../utils/writeMessage.js";
 import { promises } from "fs";
 import { checkArgsLength } from "../utils/checkArgsLength.js";
+import { getAbsolutePath } from "../utils/getAbsolutePath.js";
 
 /**
  *
@@ -14,11 +14,19 @@ const MIN_ARGS_LENGTH = 2;
 export const rn = async (args) => {
   if (!checkArgsLength({ args, length: MIN_ARGS_LENGTH })) return;
 
-  const { currentDir } = getState();
   const [oldName, newName] = args;
-  
-  const oldPath = resolve(currentDir, oldName);
-  const newPath = resolve(currentDir, newName);
+
+  let oldPath;
+  let newPath;
+
+  if (isAbsolute(oldName)) {
+    oldPath = getAbsolutePath(oldName);
+    const dirOfOldFile = dirname(oldPath);
+    newPath = resolve(dirOfOldFile, newName);
+  } else {
+    oldPath = getAbsolutePath(oldName);
+    newPath = getAbsolutePath(newName);
+  }
 
   try {
     await promises.rename(oldPath, newPath);

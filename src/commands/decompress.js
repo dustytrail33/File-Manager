@@ -1,4 +1,4 @@
-import { resolve, basename } from "path";
+import { resolve, basename, isAbsolute } from "path";
 import { createReadStream, createWriteStream } from "fs";
 import { pipeline } from "stream/promises";
 import { createBrotliDecompress } from "zlib";
@@ -6,6 +6,7 @@ import { createBrotliDecompress } from "zlib";
 import { getState } from "../state/state.js";
 import { checkArgsLength } from "../utils/checkArgsLength.js";
 import { writeMessage } from "../utils/writeMessage.js";
+import { getAbsolutePath } from "../utils/getAbsolutePath.js";
 
 /**
  *
@@ -20,12 +21,10 @@ export const decompress = async (args) => {
   const { currentDir } = getState();
   const [targetName, targetDir] = args;
 
-  const targetFilePath = resolve(currentDir, targetName);
-  const targetDecompressPath = resolve(
-    currentDir,
-    targetDir,
-    basename(targetName).replace(/\.br$/, '')
-  );
+  const targetFilePath = getAbsolutePath(targetName);
+  const targetDecompressPath = isAbsolute(targetDir)
+    ? resolve(targetDir, basename(targetName).replace(/\.br$/, ""))
+    : resolve(currentDir, targetDir, basename(targetName).replace(/\.br$/, ""));
 
   try {
     const readStream = createReadStream(targetFilePath);
@@ -45,7 +44,7 @@ export const decompress = async (args) => {
         color: "red",
       });
     } else {
-      writeMessage({ message: "Error decompress", color: "red" });
+      writeMessage({ message: `Error decompress ${error.message}`, color: "red" });
     }
   }
 };
